@@ -17,7 +17,7 @@ class MonitorSocket:
     def __del__(self):
         self.TCPServerSocket.close()
         self.ClientSocket.close()
-        print("Connection deinit on port %d", self.__port)
+        print("Connection deinit on port %d" % self.__port)
 
     def ReceiveAPackage(self):
         return self.ClientSocket.recv(1024)
