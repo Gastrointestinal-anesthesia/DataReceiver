@@ -10,7 +10,7 @@ MonitorPublisher1 = MonitorPublisher.MonitorPublisher()
 if __name__ == "__main__":
     while True:
         try:
-            MonitorData1 = HL7Process.HL7Data(MonitorSocket1.ReceiveAPackage())
-            MonitorPublisher1.AddMsg(MonitorData1)
+            MonitorData1 = HL7Process.HL7Data(MonitorSocket1.ReceiveAPackage()).GetItemDict()
+            MonitorPublisher1.CreateMsg(MonitorData1)
         except Exception as e:
             print(repr(e))

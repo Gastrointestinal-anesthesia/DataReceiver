@@ -1,18 +1,16 @@
 import rospy
 from monitor.msg import Anesthesia
 
+
 def ShutDownAction():
     print("A monitor publisher is turned off")
 
+
 # todo: class不能多开,因为topic的名字没有指定下标
 class MonitorPublisher:
-
     monitorIndex = 0
 
     def __init__(self):
-        self.dataReady = False
-        self.msgBuffer = Anesthesia()
-
         # auto counter
         self.index = MonitorPublisher.monitorIndex
         MonitorPublisher.monitorIndex += 1
@@ -29,21 +27,36 @@ class MonitorPublisher:
         # Shutdown callback
         # rospy.on_shutdown(MonitorPublisher.shutDownAction)
 
-    def AddMsg(self, hl7data):  # Lateral should be a dict
+    def CreateMsg(self, hl7data):  # Lateral should be a dict
+
         # Message generation
 
-        # Enable data publishing
-        self.dataReady = True
+        # Judge if ECG is connected
+        self.msgBuffer = Anesthesia()
+        if (hl7data['MDC_ECG_HEART_RATE'] == -1):
+            self.msgBuffer.RATE = hl7data['MDC_PULS_OXIM_PLUS_RATE']
+        else:
+            self.msgBuffer.RATE = hl7data['MDC_ECG_HEART_RATE']
 
-    def LoopSending(self):
-        while not rospy.is_shutdown():
-            if self.dataReady:
-                self.pub.publish(self.msgBuffer)
-                self.dataReady = False
+        # Other items
+        self.msgBuffer.DIAP = hl7data['MDC_PRESS_CUFF_DIA']
+        self.msgBuffer.SYSP = hl7data['MDC_PRESS_CUFF_SYS']
+        self.msgBuffer.SpO2 = hl7data['MDC_PULS_OXIM_SAT_O2']
+        self.msgBuffer.BIS = hl7data['MNDRY_EEG_BISPECTRAL_INDEX']
 
-                rospy.loginfo("publish anesthesia message")
+        # Data publishing
+        self.pub.publish(self.msgBuffer)
+        print("Pub value: %d %d" % (self.msgBuffer.SpO2, self.msgBuffer.RATE))
 
-            # self.rate.sleep()
+    # def LoopSending(self):
+    #     while not rospy.is_shutdown():
+    #         if self.dataReady:
+    #             self.pub.publish(self.msgBuffer)
+    #             self.dataReady = False
+    #
+    #             rospy.loginfo("publish anesthesia message")
+    #
+    #         # self.rate.sleep()
 
     def __del__(self):
         print("Deconstructing Monitor publisher %d" % self.index)
