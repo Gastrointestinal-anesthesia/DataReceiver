@@ -34,7 +34,7 @@ class MonitorPublisher:
         # Judge if ECG is connected
         self.msgBuffer = Anesthesia()
         if (hl7data['MDC_ECG_HEART_RATE'] == -1):
-            self.msgBuffer.RATE = hl7data['MDC_PULS_OXIM_PLUS_RATE']
+            self.msgBuffer.RATE = hl7data['MDC_PULS_OXIM_PULS_RATE']
         else:
             self.msgBuffer.RATE = hl7data['MDC_ECG_HEART_RATE']
 

@@ -7,7 +7,7 @@ class HL7Data:
         self.message = str(data, 'utf-8')[1:]
 
         self.itemDict = {
-            'MDC_PULS_OXIM_PLUS_RATE': -1,
+            'MDC_PULS_OXIM_PULS_RATE': -1,
             'MDC_ECG_HEART_RATE': -1,
             'MDC_PRESS_CUFF_DIA': -1,
             'MDC_PRESS_CUFF_SYS': -1,
