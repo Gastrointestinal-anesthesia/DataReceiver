@@ -20,7 +20,7 @@ class MonitorPublisher:
         # ROS节点初始化,anonymous=False
         rospy.init_node("anesthesia_publisher%d" % self.index)
         # 创建一个Publisher,发布名是/anesthesia_info的topic，消息类型是Anesthesia.msg,队列长度为1
-        self.pub = rospy.Publisher("/anesthesia_info", Anesthesia, queue_size=1)
+        self.pub = rospy.Publisher("/anesthesia_info%d" % self.index, Anesthesia, queue_size=1)
         # 设置循环的频率
         self.rate = rospy.Rate(10)
 
