@@ -27,12 +27,9 @@ class MonitorPublisher:
         self.rate = rospy.Rate(10)
 
         # Shutdown callback
-        rospy.on_shutdown(MonitorPublisher.shutDownAction)
+        # rospy.on_shutdown(MonitorPublisher.shutDownAction)
 
-        # Start data publishing
-        self.LoopSending()
-
-    def AddMsg(self, dict):
+    def AddMsg(self, hl7data):  # Lateral should be a dict
         # Message generation
 
         # Enable data publishing
@@ -46,7 +43,7 @@ class MonitorPublisher:
 
                 rospy.loginfo("publish anesthesia message")
 
-            self.rate.sleep()
+            # self.rate.sleep()
 
     def __del__(self):
         print("Deconstructing Monitor publisher %d" % self.index)

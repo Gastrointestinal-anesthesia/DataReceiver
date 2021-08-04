@@ -11,8 +11,8 @@ class MonitorSocket:
         # 让默认的套接字由主动变为被动 listen
         self.TCPServerSocket.listen(128)
         # 等待客户端的链接 accept
-        self.ClientSocket, clientAddr = self.TCPServerSocket.accept()
-        print(clientAddr)
+        self.ClientSocket, self.clientAddr = self.TCPServerSocket.accept()
+        print(self.clientAddr)
 
     def __del__(self):
         self.TCPServerSocket.close()
@@ -20,4 +20,5 @@ class MonitorSocket:
         print("Connection deinit on port %d" % self.__port)
 
     def ReceiveAPackage(self):
-        return self.ClientSocket.recv(1024)
+        print("Receive a Package")
+        return self.ClientSocket.recv(4096)  # 1024
