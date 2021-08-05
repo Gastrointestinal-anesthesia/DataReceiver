@@ -4,12 +4,28 @@
 ### 环境配置
 
 * 清除devel，build等文件夹
-* 在/DataReceiver下执行catkin_make，为Python提供消息类型Anesthesia.msg的信息
+
+* 在/DataReceiver下执行
+
+  ``` shell
+  catkin_make
+  ```
+
+  为Python提供消息类型Anesthesia.msg的信息
 
 ### 运行
 
-* 在/DataReceiver下执行source devel/setup.bash
-* 在同一Terminal下执行rosrun monitor main.py
+* 在/DataReceiver下执行
+
+  ``` shell
+  source devel/setup.bash
+  ```
+
+* 在同一Terminal下执行
+
+  ``` shell
+  rosrun monitor main.py
+  ```
 
 ## 基本信息
 
@@ -43,3 +59,11 @@
 * 点击上方Python Interpreter，选择Show all
 * 点击上方Show paths for the selected interpreter(5个选项中最右侧一个)
 * 添加/opt/ros/noetic/lib/python3/dist-packages、仓库路径（例如/home/lab129/DataReceiver) /devel/lib/python3/dist-packages
+
+​	也可以在PyCharm中运行roscore
+
+* 在下方选择Terminal，输入
+
+  ``` shell
+  roscore
+  ```
