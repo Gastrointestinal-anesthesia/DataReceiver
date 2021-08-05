@@ -1,10 +1,12 @@
-import pandas as pd
 from hl7parser.hl7 import HL7Message
+
 
 class HL7Data:
     def __init__(self, data):
         # Encode data
         self.message = str(data, 'utf-8')[1:]
+        # Generate OBX contents
+        self.finalMsg = HL7Message(self.message)
 
         self.itemDict = {
             'MDC_PULS_OXIM_PULS_RATE': -1,
@@ -18,14 +20,13 @@ class HL7Data:
         self.DataProcess()
 
     def DataProcess(self):
-        # Generate OBX contents
-        self.finalMsg = HL7Message(self.message)
 
         for term in self.finalMsg.obx:
             index = str(term[2]).split('^')[1]
             value = str(term[4])
+            if index not in self.itemDict:
+                continue
             self.itemDict[index] = int(float(value))
-
             if value == '':
                 pass
 
